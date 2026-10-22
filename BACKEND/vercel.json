@@ -1,0 +1,40 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "taskflow_frontend": {
+      "root": "frontend/",
+      "framework": "vite"
+    },
+    "taskflow_api": {
+      "root": ".",
+      "framework": "fastapi",
+      "entrypoint": "app.main:app"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": { "service": "taskflow_api" }
+    },
+    {
+      "source": "/health(.*)",
+      "destination": { "service": "taskflow_api" }
+    },
+    {
+      "source": "/docs(.*)",
+      "destination": { "service": "taskflow_api" }
+    },
+    {
+      "source": "/redoc(.*)",
+      "destination": { "service": "taskflow_api" }
+    },
+    {
+      "source": "/openapi.json",
+      "destination": { "service": "taskflow_api" }
+    },
+    {
+      "source": "/(.*)",
+      "destination": { "service": "taskflow_frontend" }
+    }
+  ]
+}
