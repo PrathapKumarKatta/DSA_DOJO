@@ -33,4 +33,6 @@ The browser calls `/api/v1` and `/health/ready` on that API origin. The API docs
 
 ## Current status and limits
 
-Vercel configuration is present and both apps build locally. No Vercel account/project was linked and no public deployment was created in this pass. A working public app still needs the API host and Vercel origin so CORS and environment values can be set. The API's console email adapter does not send real email.
+The TaskFlow frontend is deployed at [https://taskflow-app-tau-six.vercel.app](https://taskflow-app-tau-six.vercel.app) and returns HTTP 200. Its Vercel project is `taskflow-app`, with root directory `BACKEND/frontend`, Vite build settings, and public access enabled. The build currently has no `VITE_API_BASE_URL`, so login and all API-backed features need a separately hosted TaskFlow API. Set that URL in Vercel and configure production `CORS_ORIGINS` before using the app. The API's console email adapter does not send real email.
+
+Vercel Git auto-deployment is not connected. The CLI connection attempt was rejected because the Git integration is not available to this project; connect the DSA_DOJO repository from Vercel's project settings to enable deployments on future pushes. The deployment was published from the pushed `codex/vercel-deployment-reports` branch.

@@ -35,4 +35,6 @@ The browser sends `/api/v1` requests to that API origin. Local Vite development 
 
 ## Current status and limits
 
-Vercel configuration is present and both apps build locally. No Vercel account/project was linked and no public deployment was created in this pass. A working public app still needs a backend host and production frontend origin so environment values and CORS can be set. The currently configured mock LLM provider does not produce real model answers.
+The Codebase Intelligence frontend is deployed at [https://codebase-intelligence-xi.vercel.app](https://codebase-intelligence-xi.vercel.app) and returns HTTP 200. Its Vercel project is `codebase-intelligence`, with root directory `RAG/codebase-intelligence/frontend`, Vite build settings, and public access enabled. The build currently has no `VITE_API_BASE_URL`, so sign-in, uploads, search, and chat need a separately hosted backend. Set that URL in Vercel and add the production frontend origin to `BACKEND_CORS_ORIGINS` before using the app. The backend also needs PostgreSQL with pgvector, Redis, a Celery worker, and persistent uploaded-file storage. The currently configured mock LLM provider does not produce real model answers.
+
+Vercel Git auto-deployment is not connected. The CLI connection attempt was rejected because the Git integration is not available to this project; connect the DSA_DOJO repository from Vercel's project settings to enable deployments on future pushes. The deployment was published from the pushed `codex/vercel-deployment-reports` branch.
