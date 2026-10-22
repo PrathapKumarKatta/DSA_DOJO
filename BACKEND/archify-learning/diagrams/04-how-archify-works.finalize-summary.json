@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\sources\\04-how-archify-works.json",
+    "sha256": "a0b39ce5c641538674e88c88e3eab5ba57e81f74c4069ae6b33fc9494556a76b",
+    "bytes": 4000
+  },
+  "artifact": {
+    "path": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\04-how-archify-works.html",
+    "sha256": "5dc2281124269c0ba015f593e0c385cffcb1c8bd8d5d8c15d5fb22076cbc427d",
+    "bytes": 816403
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\04-how-archify-works.finalize.json",
+    "summaryReceipt": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\04-how-archify-works.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\04-how-archify-works.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-22T04:22:33.230Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 12073,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

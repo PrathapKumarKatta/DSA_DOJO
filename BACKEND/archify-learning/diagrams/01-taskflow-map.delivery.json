@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "f14598a5-e94d-4253-82d0-bae996bb56a2",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\sources\\01-taskflow-map.json",
+  "output": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\01-taskflow-map.html",
+  "specification": {
+    "sha256": "8e64754f81a900ed857db9a29832a9773888b6dfe9b9122a51b82a3026c997f1",
+    "bytes": 3446
+  },
+  "artifact": {
+    "sha256": "5baae6ffa680fee06e850a275dd387972b301ac9ab9ab55498c57e848936b8b9",
+    "bytes": 817181
+  }
+}

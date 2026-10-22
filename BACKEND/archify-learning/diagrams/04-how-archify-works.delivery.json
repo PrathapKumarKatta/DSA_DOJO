@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "03442295-a6e6-43c4-a99f-2e0a00777ad6",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\sources\\04-how-archify-works.json",
+  "output": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\04-how-archify-works.html",
+  "specification": {
+    "sha256": "a0b39ce5c641538674e88c88e3eab5ba57e81f74c4069ae6b33fc9494556a76b",
+    "bytes": 4000
+  },
+  "artifact": {
+    "sha256": "5dc2281124269c0ba015f593e0c385cffcb1c8bd8d5d8c15d5fb22076cbc427d",
+    "bytes": 816403
+  }
+}

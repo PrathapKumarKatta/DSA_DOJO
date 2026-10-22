@@ -1,0 +1,78 @@
+name: taskflow
+x-app: &app
+  build: .
+  environment: &env
+    DATABASE_URL: postgresql+asyncpg://taskflow:dev_password_only@db:5432/taskflow
+    JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env first}
+    REDIS_URL: redis://redis:6379/0
+    CORS_ORIGINS: ${CORS_ORIGINS:-[]}
+    ENVIRONMENT: ${ENVIRONMENT:-development}
+    EMAIL_BACKEND: ${EMAIL_BACKEND:-console}
+    EMAIL_FROM: ${EMAIL_FROM:-taskflow@example.com}
+    SMTP_HOST: ${SMTP_HOST:-localhost}
+    SMTP_PORT: ${SMTP_PORT:-587}
+    SMTP_STARTTLS: ${SMTP_STARTTLS:-true}
+    SMTP_USERNAME: ${SMTP_USERNAME:-}
+    SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+  depends_on:
+    db: {condition: service_healthy}
+    redis: {condition: service_healthy}
+    migrate: {condition: service_completed_successfully}
+  restart: unless-stopped
+
+services:
+  frontend:
+    build: ./frontend
+    ports: ["127.0.0.1:3000:8080"]
+    depends_on:
+      api: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8080/"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: taskflow
+      POSTGRES_PASSWORD: dev_password_only
+      POSTGRES_DB: taskflow
+    ports: ["127.0.0.1:5432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U taskflow -d taskflow"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+  redis:
+    image: redis:7-alpine
+    ports: ["127.0.0.1:6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  migrate:
+    build: .
+    environment: *env
+    command: ["alembic", "upgrade", "head"]
+    depends_on:
+      db: {condition: service_healthy}
+    restart: "no"
+  api:
+    <<: *app
+    ports: ["127.0.0.1:8000:8000"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/ready')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+  worker:
+    <<: *app
+    command: ["celery", "-A", "app.workers.celery_app:celery_app", "worker", "--loglevel=info", "--concurrency=2"]
+  beat:
+    <<: *app
+    command: ["celery", "-A", "app.workers.celery_app:celery_app", "beat", "--loglevel=info", "--schedule=/tmp/taskflow-beat"]
+volumes:
+  pgdata:

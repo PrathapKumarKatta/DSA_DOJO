@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Archify | From explanation to interactive HTML",
+    "output": "archify-learning/diagrams/04-how-archify-works.html",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/tt-a1i/archify.git",
+      "revision": "25cf37080fc8b1dbe758a4efc3935b55f3327083"
+    }
+  },
+  "components": [
+    {
+      "id": "agent",
+      "type": "external",
+      "label": "Your coding agent",
+      "sublabel": "Reads intent and source",
+      "pos": [
+        40,
+        40
+      ],
+      "size": [
+        172,
+        64
+      ],
+      "sources": [
+        {
+          "path": "archify/SKILL.md",
+          "line": 36,
+          "end_line": 38
+        }
+      ]
+    },
+    {
+      "id": "json",
+      "type": "database",
+      "label": "Typed JSON file",
+      "sublabel": "Editable diagram source",
+      "pos": [
+        370,
+        40
+      ],
+      "size": [
+        172,
+        64
+      ],
+      "sources": [
+        {
+          "path": "archify/schemas/architecture.schema.json",
+          "line": 1,
+          "end_line": 30
+        }
+      ]
+    },
+    {
+      "id": "finalize",
+      "type": "backend",
+      "label": "Finalize CLI",
+      "sublabel": "Coordinates quality gates",
+      "pos": [
+        700,
+        40
+      ],
+      "size": [
+        172,
+        64
+      ],
+      "sources": [
+        {
+          "path": "archify/bin/archify.mjs",
+          "line": 5888,
+          "end_line": 5955
+        }
+      ]
+    },
+    {
+      "id": "gates",
+      "type": "security",
+      "label": "Validation and delivery",
+      "sublabel": "Check before accepting",
+      "pos": [
+        700,
+        280
+      ],
+      "size": [
+        172,
+        64
+      ],
+      "sources": [
+        {
+          "path": "archify/SKILL.md",
+          "line": 39,
+          "end_line": 49
+        }
+      ]
+    },
+    {
+      "id": "html",
+      "type": "frontend",
+      "label": "Standalone HTML",
+      "sublabel": "Explore in your browser",
+      "pos": [
+        370,
+        280
+      ],
+      "size": [
+        172,
+        64
+      ],
+      "sources": [
+        {
+          "path": "archify/SKILL.md",
+          "line": 1,
+          "end_line": 12
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "author",
+      "from": "agent",
+      "to": "json",
+      "label": "authors",
+      "variant": "default"
+    },
+    {
+      "id": "input",
+      "from": "json",
+      "to": "finalize",
+      "label": "reads",
+      "variant": "default"
+    },
+    {
+      "id": "run",
+      "from": "finalize",
+      "to": "gates",
+      "label": "runs checks",
+      "variant": "default"
+    },
+    {
+      "id": "publish",
+      "from": "gates",
+      "to": "html",
+      "label": "on passing gates",
+      "variant": "emphasis"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Who does what",
+      "items": [
+        "The coding agent interprets the project and authors JSON.",
+        "The CLI renders and checks that source; it does not independently understand your whole app.",
+        "A diagram can pass layout checks while still making a factual mistake."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Artifacts",
+      "items": [
+        "Keep JSON for editing and HTML for viewing.",
+        "Delivery and finalize receipts record automated verification.",
+        "HTML viewing needs no running TaskFlow database or API."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Source-backed map",
+      "items": [
+        "This map cites the downloaded Archify commit.",
+        "TaskFlow maps summarize uncommitted local code and have a separate source manifest.",
+        "No global skill installation was performed."
+      ]
+    }
+  ]
+}

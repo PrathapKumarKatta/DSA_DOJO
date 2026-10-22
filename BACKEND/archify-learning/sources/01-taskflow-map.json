@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "TaskFlow | From browser to stored tasks",
+    "output": "archify-learning/diagrams/01-taskflow-map.html",
+    "locale": "en",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "browser",
+      "type": "frontend",
+      "label": "React in browser",
+      "sublabel": "Forms and Query cache",
+      "pos": [
+        40,
+        40
+      ],
+      "size": [
+        172,
+        64
+      ]
+    },
+    {
+      "id": "nginx",
+      "type": "cloud",
+      "label": "nginx frontend",
+      "sublabel": "Serves JS and proxies API",
+      "pos": [
+        370,
+        40
+      ],
+      "size": [
+        172,
+        64
+      ]
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "FastAPI",
+      "sublabel": "JWT and schema checks",
+      "pos": [
+        700,
+        40
+      ],
+      "size": [
+        172,
+        64
+      ]
+    },
+    {
+      "id": "services",
+      "type": "backend",
+      "label": "Task services",
+      "sublabel": "Membership and version",
+      "pos": [
+        700,
+        260
+      ],
+      "size": [
+        172,
+        64
+      ]
+    },
+    {
+      "id": "db",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "Tasks and activity",
+      "pos": [
+        370,
+        260
+      ],
+      "size": [
+        172,
+        64
+      ]
+    },
+    {
+      "id": "redis",
+      "type": "messagebus",
+      "label": "Redis",
+      "sublabel": "Login attempt counter",
+      "pos": [
+        1030,
+        40
+      ],
+      "size": [
+        172,
+        64
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "http",
+      "from": "browser",
+      "to": "nginx",
+      "label": "HTTP /api/v1",
+      "variant": "emphasis"
+    },
+    {
+      "id": "proxy",
+      "from": "nginx",
+      "to": "api",
+      "label": "proxy HTTP",
+      "variant": "emphasis"
+    },
+    {
+      "id": "invoke",
+      "from": "api",
+      "to": "services",
+      "label": "protected task call",
+      "variant": "security"
+    },
+    {
+      "id": "sql",
+      "from": "services",
+      "to": "db",
+      "label": "SQL transaction",
+      "variant": "emphasis"
+    },
+    {
+      "id": "limiter",
+      "from": "api",
+      "to": "redis",
+      "label": "login only",
+      "variant": "default"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Read the arrows",
+      "items": [
+        "The browser runs React; nginx serves its compiled assets.",
+        "Protected task requests pass JWT checks and workspace membership checks.",
+        "The response returns over the same HTTP connection; reply arrows are omitted."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Persistence",
+      "items": [
+        "PostgreSQL is the task source of truth.",
+        "Task edits and their activity records commit in one transaction.",
+        "Redis is not a read-through task cache in this application."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Scope",
+      "items": [
+        "Local Docker configuration, not a public deployment.",
+        "Worker and beat are explained in map 03.",
+        "Current working-tree summary; source locations are in the companion guide."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\sources\\03-reminders.json",
+    "sha256": "321718b2f28f9b0496256b831738ed38790f71fea82719ff4b6e014087e5867f",
+    "bytes": 3273
+  },
+  "artifact": {
+    "path": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\03-reminders.html",
+    "sha256": "e9dfa2025eb74c2d19fcce1f53189b5cf0d9281a838f1a14b1310f29f6e9ddbf",
+    "bytes": 815690
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\review-reminders-2\\03-reminders.finalize.json",
+    "summaryReceipt": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\review-reminders-2\\03-reminders.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\review-reminders-2\\03-reminders.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-22T04:22:33.230Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 11832,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

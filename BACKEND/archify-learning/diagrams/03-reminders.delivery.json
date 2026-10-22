@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "8f94c929-f0f3-4cc5-add4-3c78399671ff",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\sources\\03-reminders.json",
+  "output": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\03-reminders.html",
+  "specification": {
+    "sha256": "321718b2f28f9b0496256b831738ed38790f71fea82719ff4b6e014087e5867f",
+    "bytes": 3273
+  },
+  "artifact": {
+    "sha256": "e9dfa2025eb74c2d19fcce1f53189b5cf0d9281a838f1a14b1310f29f6e9ddbf",
+    "bytes": 815690
+  }
+}

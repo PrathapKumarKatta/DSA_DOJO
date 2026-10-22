@@ -1,0 +1,86 @@
+{
+  "scope": "TaskFlow current local working tree; not pinned to a Git commit",
+  "archify_revision": "25cf37080fc8b1dbe758a4efc3935b55f3327083",
+  "files": [
+    {
+      "path": "compose.yaml",
+      "sha256": "e5698d8e8355721f795458b8b3252349887d17214a11020641bc498e409f0545",
+      "lines": 78
+    },
+    {
+      "path": "frontend/nginx.conf",
+      "sha256": "f890f6a13e02ab6f296b654097d84046915efde4bc4b6baa21c773163973db87",
+      "lines": 27
+    },
+    {
+      "path": "frontend/src/api.ts",
+      "sha256": "fc2305cf075944d4f7cfd6a236af128b5015802ea7010e467d3f9a9e43897e24",
+      "lines": 85
+    },
+    {
+      "path": "frontend/src/TaskPanel.tsx",
+      "sha256": "133c297f88769bd8c61d068ce0fafa7d56f742d1b490f662b292dc518909fe18",
+      "lines": 453
+    },
+    {
+      "path": "frontend/src/App.tsx",
+      "sha256": "26061ed1d62addeb7dd3d14cfa67978d8bccf30dad94cb2fceb1eb4a73752fc1",
+      "lines": 1582
+    },
+    {
+      "path": "app/main.py",
+      "sha256": "49bfb216427c5de261d8008ada1c5aae7df220cd88c4fcb541f41707b42694ae",
+      "lines": 76
+    },
+    {
+      "path": "app/api/dependencies.py",
+      "sha256": "0ecf58a586e4e3826d026d47c90dede7eb3149c5c717707be71a772e2bce71f6",
+      "lines": 30
+    },
+    {
+      "path": "app/api/v1/tasks.py",
+      "sha256": "884189f20d4e8183545e9d087a7a87e92f338bb03ce3c9f17e89ad618ff2578f",
+      "lines": 147
+    },
+    {
+      "path": "app/db/session.py",
+      "sha256": "310016bda436d800704e64f9dd4c315390325eb0d021ac4df14f5880714c5929",
+      "lines": 21
+    },
+    {
+      "path": "app/services/tasks.py",
+      "sha256": "162fa3cbfbe9da38bac3bec8f53b6e58ab9f6111cced3ad5585aa35e18ac463c",
+      "lines": 102
+    },
+    {
+      "path": "app/services/permissions.py",
+      "sha256": "f51d491c372021f39989022212ed9dd8aa859a2a0bc82ad07c852278fde62526",
+      "lines": 66
+    },
+    {
+      "path": "app/services/notifications.py",
+      "sha256": "c1b22454246e3f6ecd9623982c762db8cf395b4782aebbec379fe116a38adecf",
+      "lines": 146
+    },
+    {
+      "path": "app/workers/celery_app.py",
+      "sha256": "57330bf7797233251d5da8407cdf29ca924a905a3911fff0c83dc6b9114c57de",
+      "lines": 16
+    },
+    {
+      "path": "app/workers/reminders.py",
+      "sha256": "060d40d1c5b0f381e6287220d2efe5c290e905f0127dcb8862827bf7ba97b3ea",
+      "lines": 34
+    },
+    {
+      "path": "app/models/__init__.py",
+      "sha256": "4ef259ea0606ccf861580f95186a77e9fce65b73cad5eed4f241cf47b9cb0211",
+      "lines": 188
+    },
+    {
+      "path": "docs/deployment/compose.production.yaml",
+      "sha256": "a51b039119bffbbb3de54ef3052976366132e34d1568a333dda90e7639a7ca8f",
+      "lines": 117
+    }
+  ]
+}

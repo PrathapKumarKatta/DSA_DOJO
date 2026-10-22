@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "e04401aa-41cf-4c63-8d76-be9a8fc3952f",
+  "status": "current",
+  "command": "deliver",
+  "type": "sequence",
+  "input": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\sources\\02-task-edit.json",
+  "output": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\02-task-edit.html",
+  "specification": {
+    "sha256": "71eee080a7f470a371ed903ea0df60a04bd4bf3c0528f8cb4abfdca7cc7c482b",
+    "bytes": 4428
+  },
+  "artifact": {
+    "sha256": "ce791449e4a5fba414551278d7101d141bf981d71a794c208b7e8d6c0e5e4e16",
+    "bytes": 817164
+  }
+}

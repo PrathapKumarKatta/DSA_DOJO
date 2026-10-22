@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\sources\\03-reminders.json",
+    "sha256": "22236b0f7aee7028eda6e5d08ea9ca6f67ae6ff73ad57f17d6e0019b1dd3d3b7",
+    "bytes": 3273
+  },
+  "artifact": {
+    "path": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\03-reminders.html",
+    "sha256": "3a04e3f70ba85bb23a75d4abebad0c61fde48e320962c60a042bc6f9108ce97c",
+    "bytes": 816001
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\03-reminders.finalize.json",
+    "summaryReceipt": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\03-reminders.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\chara\\OneDrive\\Documents\\GitHub\\DSA_DOJO\\BACKEND\\archify-learning\\diagrams\\03-reminders.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-22T04:22:33.230Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 11331,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 1,
+      "routesOverSuggestedBends": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "send",
+            "from": "worker",
+            "to": "email",
+            "label": "if still eligible",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "right": {
+            "id": "enqueue-delivery",
+            "from": "worker",
+            "to": "redis",
+            "label": "enqueue delivery",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "point": [
+            651,
+            128
+          ],
+          "sharedNode": "worker"
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "enqueue-delivery",
+            "from": "worker",
+            "to": "redis",
+            "label": "enqueue delivery",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "bends": 3,
+          "stretch": 1.175
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "worker → email and worker → redis cross next to worker: move node email or redis so the two reach worker from different sides (for example one level with it, one directly above or below it).",
+      "worker → redis needs 3 bends: move node worker or redis so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

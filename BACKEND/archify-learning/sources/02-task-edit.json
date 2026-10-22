@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "TaskFlow | One task edit from click to commit",
+    "output": "archify-learning/diagrams/02-task-edit.html",
+    "locale": "en",
+    "quality_profile": "showcase"
+  },
+  "participants": [
+    {
+      "id": "ui",
+      "type": "frontend",
+      "label": "React UI",
+      "sublabel": "TaskPanel and api.ts"
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "FastAPI",
+      "sublabel": "route and dependencies"
+    },
+    {
+      "id": "service",
+      "type": "backend",
+      "label": "Task service",
+      "sublabel": "authorization and update"
+    },
+    {
+      "id": "db",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "transaction and version"
+    }
+  ],
+  "messages": [
+    {
+      "id": "step-1",
+      "from": "ui",
+      "to": "api",
+      "y": 170,
+      "label": "PATCH task + expected_version",
+      "variant": "emphasis"
+    },
+    {
+      "id": "step-2",
+      "from": "api",
+      "to": "db",
+      "y": 208,
+      "label": "validate JWT; load active user",
+      "variant": "security"
+    },
+    {
+      "id": "step-3",
+      "from": "db",
+      "to": "api",
+      "y": 246,
+      "label": "user found",
+      "variant": "return"
+    },
+    {
+      "id": "step-4",
+      "from": "api",
+      "to": "service",
+      "y": 284,
+      "label": "validated TaskUpdate",
+      "variant": "default"
+    },
+    {
+      "id": "step-5",
+      "from": "service",
+      "to": "db",
+      "y": 322,
+      "label": "load task through membership",
+      "variant": "security"
+    },
+    {
+      "id": "step-6",
+      "from": "db",
+      "to": "service",
+      "y": 360,
+      "label": "task and membership",
+      "variant": "return"
+    },
+    {
+      "id": "step-7",
+      "from": "service",
+      "to": "db",
+      "y": 398,
+      "label": "lock workspace; recheck access",
+      "variant": "security"
+    },
+    {
+      "id": "step-8",
+      "from": "db",
+      "to": "service",
+      "y": 436,
+      "label": "current authorization",
+      "variant": "return"
+    },
+    {
+      "id": "step-9",
+      "from": "service",
+      "to": "db",
+      "y": 474,
+      "label": "UPDATE WHERE version matches",
+      "variant": "emphasis"
+    },
+    {
+      "id": "step-10",
+      "from": "db",
+      "to": "service",
+      "y": 512,
+      "label": "one updated row",
+      "variant": "return"
+    },
+    {
+      "id": "step-11",
+      "from": "service",
+      "to": "db",
+      "y": 550,
+      "label": "insert activity; flush and refresh",
+      "variant": "default"
+    },
+    {
+      "id": "step-12",
+      "from": "service",
+      "to": "api",
+      "y": 588,
+      "label": "updated task",
+      "variant": "return"
+    },
+    {
+      "id": "step-13",
+      "from": "api",
+      "to": "db",
+      "y": 626,
+      "label": "dependency commits transaction",
+      "variant": "emphasis"
+    },
+    {
+      "id": "step-14",
+      "from": "db",
+      "to": "api",
+      "y": 664,
+      "label": "commit succeeds",
+      "variant": "return"
+    },
+    {
+      "id": "step-15",
+      "from": "api",
+      "to": "ui",
+      "y": 702,
+      "label": "200 JSON; invalidate task queries",
+      "variant": "return"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Success",
+      "items": [
+        "The client submits expected_version with its changed fields.",
+        "The service locks the workspace and rechecks permissions after waiting.",
+        "The SQL update matches the expected version; activity joins the transaction."
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Conflict and errors",
+      "items": [
+        "A stale expected_version affects no row and returns 409.",
+        "The dependency rolls back exceptions; 200 follows a successful commit.",
+        "The UI retains a stale draft and offers Load latest version."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "How to read",
+      "items": [
+        "Read top to bottom. Positions indicate order, not duration.",
+        "This is the successful branch; error branches are described in these cards.",
+        "nginx transport and low-level SQL round trips are intentionally folded."
+      ]
+    }
+  ]
+}

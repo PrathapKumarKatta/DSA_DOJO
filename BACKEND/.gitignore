@@ -1,0 +1,18 @@
+.venv/
+.env
+.env.production
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.db
+*.dump
+backups/
+*.egg-info/
+dist/
+celerybeat-schedule*
+*.log
+# Downloaded upstream tool checkout; keep learning material in archify-learning tracked.
+/archify/

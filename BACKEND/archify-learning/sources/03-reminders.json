@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "TaskFlow | Reminders run outside the HTTP request",
+    "output": "archify-learning/diagrams/03-reminders.html",
+    "locale": "en",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "beat",
+      "type": "backend",
+      "label": "Celery beat",
+      "sublabel": "Schedules scan every 60s",
+      "pos": [
+        40,
+        40
+      ],
+      "size": [
+        172,
+        64
+      ]
+    },
+    {
+      "id": "redis",
+      "type": "messagebus",
+      "label": "Redis broker",
+      "sublabel": "Scan and delivery messages",
+      "pos": [
+        390,
+        40
+      ],
+      "size": [
+        172,
+        64
+      ]
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "Celery worker",
+      "sublabel": "Executes scan and deliver",
+      "pos": [
+        740,
+        40
+      ],
+      "size": [
+        172,
+        64
+      ]
+    },
+    {
+      "id": "db",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "Due tasks and delivery rows",
+      "pos": [
+        740,
+        280
+      ],
+      "size": [
+        172,
+        64
+      ]
+    },
+    {
+      "id": "email",
+      "type": "external",
+      "label": "Email adapter",
+      "sublabel": "Console or configured SMTP",
+      "pos": [
+        1090,
+        40
+      ],
+      "size": [
+        172,
+        64
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "schedule",
+      "from": "beat",
+      "to": "redis",
+      "label": "enqueue scan",
+      "variant": "dashed"
+    },
+    {
+      "id": "consume",
+      "from": "redis",
+      "to": "worker",
+      "label": "consume jobs",
+      "variant": "dashed"
+    },
+    {
+      "id": "records",
+      "from": "worker",
+      "to": "db",
+      "label": "claim and record",
+      "variant": "default"
+    },
+    {
+      "id": "send",
+      "from": "worker",
+      "to": "email",
+      "label": "if still eligible",
+      "variant": "default"
+    },
+    {
+      "id": "enqueue-delivery",
+      "from": "worker",
+      "to": "redis",
+      "label": "enqueue delivery",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Scheduling",
+      "items": [
+        "Beat queues a scan; a worker executes that scan.",
+        "The scanner finds unfinished tasks due within one hour or already overdue.",
+        "Recipient is the assignee, falling back to the creator."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Durable intent",
+      "items": [
+        "PostgreSQL records each task/recipient/due occurrence.",
+        "Expired five-minute queue leases allow dispatch recovery.",
+        "A delivery reloads current data and can cancel an obsolete reminder."
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Delivery limits",
+      "items": [
+        "Transient errors back off; at most five recorded send attempts.",
+        "Console delivery logs an ID; it does not send to an inbox.",
+        "SMTP success before a process crash can still cause a duplicate retry."
+      ]
+    }
+  ]
+}
