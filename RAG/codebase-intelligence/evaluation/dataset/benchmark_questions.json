@@ -1,0 +1,58 @@
+[
+  {
+    "id": "q1",
+    "category": "function_identification",
+    "question": "Where is user authentication implemented?",
+    "expected_files": ["auth/service.py", "api/routes.py"],
+    "expected_symbols": ["authenticate_user", "handle_login_request"],
+    "has_answer": true
+  },
+  {
+    "id": "q2",
+    "category": "database_connection",
+    "question": "Explain how the database connection works and connection pool is managed.",
+    "expected_files": ["db/connection.py"],
+    "expected_symbols": ["DatabaseManager", "get_db_connection"],
+    "has_answer": true
+  },
+  {
+    "id": "q3",
+    "category": "api_routing",
+    "question": "Which functions handle API requests for user login and registration?",
+    "expected_files": ["api/routes.py"],
+    "expected_symbols": ["handle_login_request", "handle_register_request"],
+    "has_answer": true
+  },
+  {
+    "id": "q4",
+    "category": "cross_file_dependencies",
+    "question": "Explain the complete login flow from API route to credential verification.",
+    "expected_files": ["api/routes.py", "auth/service.py"],
+    "expected_symbols": ["handle_login_request", "authenticate_user", "verify_password"],
+    "has_answer": true
+  },
+  {
+    "id": "q5",
+    "category": "security_hashing",
+    "question": "Where is password hashing performed?",
+    "expected_files": ["auth/service.py"],
+    "expected_symbols": ["hash_password"],
+    "has_answer": true
+  },
+  {
+    "id": "q6",
+    "category": "payment_processing",
+    "question": "Which files should I inspect to understand the credit card payment system?",
+    "expected_files": ["payments/processor.py", "api/routes.py"],
+    "expected_symbols": ["PaymentProcessor", "charge_card"],
+    "has_answer": true
+  },
+  {
+    "id": "q7",
+    "category": "negative_control",
+    "question": "Where is the Kafka event streaming consumer configured?",
+    "expected_files": [],
+    "expected_symbols": [],
+    "has_answer": false
+  }
+]

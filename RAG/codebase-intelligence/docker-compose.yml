@@ -1,0 +1,115 @@
+name: codebase-intelligence
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: codebase_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-charan}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-codebase_intelligence}
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-charan} -d ${POSTGRES_DB:-codebase_intelligence}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: codebase_redis
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: codebase-intelligence-backend:local
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: codebase_backend
+    restart: unless-stopped
+    command: ["sh", "-c", "alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+    environment:
+      - APP_NAME=Codebase Intelligence
+      - APP_ENV=production
+      - DEBUG=false
+      - DATABASE_URL=postgresql+psycopg://${POSTGRES_USER:-charan}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-codebase_intelligence}
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+      - SECRET_KEY=${SECRET_KEY:-production-secret-key-min-32-chars-long-codebase}
+      - EMBEDDING_PROVIDER=sentence_transformers
+      - EMBEDDING_MODEL_NAME=BAAI/bge-small-en-v1.5
+      - LLM_PROVIDER=${LLM_PROVIDER:-mock}
+      - LLM_API_KEY=${LLM_API_KEY:-}
+      - STORAGE_DIR=/app/storage
+      - HF_HOME=/app/models
+    ports:
+      - "127.0.0.1:8002:8000"
+    volumes:
+      - storage_data:/app/storage
+      - model_cache:/app/models
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  worker:
+    image: codebase-intelligence-backend:local
+    container_name: codebase_worker
+    restart: unless-stopped
+    command: ["celery", "-A", "app.workers.celery_app", "worker", "--include=app.workers.tasks", "--loglevel=info", "--concurrency=2"]
+    environment:
+      - APP_NAME=Codebase Intelligence
+      - APP_ENV=production
+      - DATABASE_URL=postgresql+psycopg://${POSTGRES_USER:-charan}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-codebase_intelligence}
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+      - SECRET_KEY=${SECRET_KEY:-production-secret-key-min-32-chars-long-codebase}
+      - EMBEDDING_PROVIDER=sentence_transformers
+      - EMBEDDING_MODEL_NAME=BAAI/bge-small-en-v1.5
+      - STORAGE_DIR=/app/storage
+      - HF_HOME=/app/models
+    volumes:
+      - storage_data:/app/storage
+      - model_cache:/app/models
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: codebase_frontend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3002:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  storage_data:
+  model_cache:
