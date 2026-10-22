@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: taskflow-api
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: BACKEND/Dockerfile
+    dockerContext: BACKEND
+    dockerCommand: >-
+      sh -c 'alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port "$PORT"'
+    healthCheckPath: /health/ready
+    autoDeployTrigger: "off"
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: CORS_ORIGINS
+        value: '["https://taskflow-app-tau-six.vercel.app"]'
+      - key: EMAIL_BACKEND
+        value: console
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false

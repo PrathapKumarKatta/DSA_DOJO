@@ -1,7 +1,7 @@
 from functools import lru_cache
 from typing import Literal
 
-from pydantic import Field, model_validator
+from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -23,6 +23,18 @@ class Settings(BaseSettings):
     smtp_password: str | None = None
     login_limit: int = Field(default=10, ge=1)
     login_window_seconds: int = Field(default=60, ge=1)
+
+    @field_validator("database_url", mode="before")
+    @classmethod
+    def use_async_postgres_driver(cls, value):
+        # Hosted Postgres vendors generally provide a postgresql:// URL. This
+        # app uses SQLAlchemy's async engine, which needs the asyncpg driver.
+        if isinstance(value, str):
+            if value.startswith("postgres://"):
+                return value.replace("postgres://", "postgresql+asyncpg://", 1)
+            if value.startswith("postgresql://"):
+                return value.replace("postgresql://", "postgresql+asyncpg://", 1)
+        return value
 
     @model_validator(mode="after")
     def production_configuration(self):
